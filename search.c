@@ -18,7 +18,10 @@ void execute_built_in(int n, char **arguments, char **env)
 	switch (n)
 	{
 	case 0:
-		chdir(arguments[1]);
+		if (arguments[1])
+			chdir(arguments[1]);
+		else
+			chdir(get_env("HOME"));
 		break;
 	case 1:
 		exit(0);
