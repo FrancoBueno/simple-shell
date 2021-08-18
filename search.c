@@ -75,5 +75,14 @@ int search_command(char **arguments, char **env)
 }
 int search_file(char **arguments, char **env)
 {
+	int file;
+	struct stat statbuf;
+
+	file = stat(arguments[0], &statbuf);
+	if (file == 0)
+	{
+		execute(arguments, env);
+		return (1);
+	}
 	return (0);
 }

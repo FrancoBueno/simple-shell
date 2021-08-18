@@ -51,6 +51,9 @@ int command(char **arguments, char **env)
 {
 	int i;
 
+	i = search_file(arguments, env);
+	if (i == 1)
+		return (1);
 	i = search_bulit_in(arguments, env);
 	if (i == 1)
 		return (1);
