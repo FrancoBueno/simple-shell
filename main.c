@@ -44,14 +44,14 @@ int command(char **arguments, char **env)
 	int i;
 
 	i = search_bulit_in(arguments, env);
-	if (i == 1)
-		return (1);
+	if (i != 0)
+		return (i);
 	i = search_command(arguments, env);
-	if (i == 1)
-		return (1);
+	if (i != 0)
+		return (i);
 	i = search_file(arguments, env);
-	if (i == 1)
-		return (1);
+	if (i != 0)
+		return (i);
 	printf("./shell: No such file or directory\n");
 	return (1);
 }

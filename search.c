@@ -13,19 +13,25 @@ void execute(char **arguments, char **env)
 	else
 		wait(&exit_status);
 }
-void execute_built_in(int n, char **arguments, char **env)
+int execute_built_in(int n, char **arguments, char **env)
 {
+	int i;
 	switch (n)
 	{
 	case 0:
 		if (arguments[1])
-			chdir(arguments[1]);
+			if ((arguments[1][0] == '-') && (arguments[1][1] == 0))
+				chdir(get_env("OLDPWD"));
+			else
+				chdir(arguments[1]);
 		else
 			chdir(get_env("HOME"));
 		break;
 	case 1:
-		exit(0);
+		return (-1);
+		break;
 	}
+	return (1);
 }
 int search_bulit_in(char **arguments, char **env)
 {
@@ -38,8 +44,7 @@ int search_bulit_in(char **arguments, char **env)
 	for (i = 0; commands[i]; i++)
 		if (strcmp(commands[i], arguments[0]) == 0)
 		{
-			execute_built_in(i, arguments, env);
-			return (1);
+			return (execute_built_in(i, arguments, env));
 		}
 	return (0);
 }
